@@ -9,11 +9,11 @@ from Algo import info
 #==========title=================================
 st.title("📊 TRA CỨU SỰ CỐ")
 #============Nhập giá trị khoảng cách====================
+df, df2 = accum()
 dis87 = st.number_input("🔢 Nhập khoảng cách sự cố F87:", min_value=0)
 dis21 = st.number_input("🔢 Nhập khoảng cách sự cố F21:", min_value=0)
 submit=st.button("submit")
 if submit:
-      df, df2 = accum()
       result=findx(dis87,df,"F87")
       info(df2,result, "F87")
       result=findx(dis21,df,"F21")
