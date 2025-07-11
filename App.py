@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import openpyxl as op
 import config as cf
 from config import accum
 import Algo as al
