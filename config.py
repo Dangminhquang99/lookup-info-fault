@@ -5,8 +5,8 @@ import openpyxl as op
 #============== Truy xuất file lũy kế để tính toán =======================
 def accum():
     tendz_map = {
-        "Đường dây 273 KrongBuk - 271 Nha Trang": ["Krb-nt.xlsx", "Tongke_krb.xlsx"],
-        "Đường dây 272 Thiên Tân - 271 Cam Ranh": ["Dn.xlsx", "Tongke_dn.xlsx"]
+        "Đường dây 273 KrongBuk - 271 Nha Trang": ["krb-nt.xlsx", "Tongke_krb.xlsx"],
+        "Đường dây 272 Thiên Tân - 271 Cam Ranh": ["dn.xlsx", "Tongke_dn.xlsx"]
     }
 
     choose_dz = st.selectbox("📂 Hãy chọn đường dây", list(tendz_map.keys()))
