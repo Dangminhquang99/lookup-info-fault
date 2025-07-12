@@ -15,7 +15,7 @@ df = gf.accum(select_dz)
 col1, col2=st.columns(2)
 with col1:  #TẠI TBA 1 #cột 1
     col_name=gf.ass_col_name(tba_0)
-    st.header(f"-----------{tba_0}----------")
+    st.header(f"{tba_0}")
     st.markdown("---")
     dis87_1 = st.number_input(f"🔢 Nhập khoảng cách sự cố F87/1:", min_value=0)
     dis21_1 = st.number_input(f"🔢 Nhập khoảng cách sự cố F21/1:", min_value=0)
@@ -28,7 +28,7 @@ with col1:  #TẠI TBA 1 #cột 1
         
 with col2:#TẠI TBA 2 #cột 2
     col_name=gf.ass_col_name(tba_1)
-    st.header(f"-----------{tba_1}-----------")
+    st.header(f"{tba_1}")
     st.markdown("---")
     dis87_2 = st.number_input(f"🔢 Nhập khoảng cách sự cố F87/2:", min_value=0)
     dis21_2 = st.number_input(f"🔢 Nhập khoảng cách sự cố F21/2:", min_value=0)
