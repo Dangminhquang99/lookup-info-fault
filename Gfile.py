@@ -11,8 +11,8 @@ tendz_map = {
 # Ánh xạ đường dây → danh sách các TBA tương ứng
 tba_map = {
     "Đường dây 273 KrongBuk - 271 Nha Trang": [
-        "Trạm biến áp 220kV Nha Trang",
-        "Trạm biến áp 220kV KrongBuk"
+        "Trạm biến áp 220kV KrongBuk",
+        "Trạm biến áp 220kV Nha Trang"
     ],
     "Đường dây 272 Thiên Tân - 271 Cam Ranh": [
         "Trạm biến áp 220kV Cam Ranh",
@@ -21,10 +21,10 @@ tba_map = {
 }
 #Ánh xạ tba đến lũy kế ==========================================================
 tba_to_column= {
-    "Trạm biến áp 220kV Nha Trang":"Lũy kế",
-    "Trạm biến áp 220kV Cam Ranh":"Lũy kế",
-    "Trạm biến áp 220kV KrongBuk": "Lũy kế 1",
-    "Trạm biến áp 220kV Thiên Tân":"Lũy kế 1"
+    "Trạm biến áp 220kV Nha Trang":"Lũy kế nghịch",
+    "Trạm biến áp 220kV Cam Ranh":"Lũy kế nghịch",
+    "Trạm biến áp 220kV KrongBuk": "Lũy kế 1 thuận",
+    "Trạm biến áp 220kV Thiên Tân":"Lũy kế 1 thuận"
 }
 
 # Chọn đường dây=================================================================
