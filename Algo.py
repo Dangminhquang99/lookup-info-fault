@@ -31,26 +31,19 @@ def info(df, result, role_name):
     if 'Vị trí' not in df.columns:
         st.error("❌ File thông tin cột thiếu cột 'Vị trí'.")
         return
-    v1, v2 = result
-    row_index = df[df['Vị trí']==v1].index[0]
-    st.header(f"THÔNG TIN VỊ TRÍ {v1}")
-    cong_dung_cot=df.loc[row_index,'Công dụng cột']
-    st.write(f"Công dụng cột: {cong_dung_cot}")
-    Thu_tu_pha=df.loc[row_index,'Thứ tự pha']
-    st.write(f"Thứ tự pha: {Thu_tu_pha}")
-    goc_lai=df.loc[row_index,'Góc lái']
-    st.write(f"Góc lái: {goc_lai}")
-    loai_cot=df.loc[row_index,'Loại cột']
-    st.write(f"Loại cột: {loai_cot}")
-    chieu_cao_cot=df.loc[row_index,'Chiều cao cột']
-    st.write(f"Chiều cao cột: {chieu_cao_cot} m")
-    loai_tiep_dia=df.loc[row_index,'Loại tiếp địa']
-    st.write(f"Loại tiếp địa: {loai_tiep_dia}")
-    loai_day_dan=df.loc[row_index,'Loại dây dẫn']
-    st.write(f"Loại dây dẫn: {loai_day_dan}")
-    loai_cach_dien=df.loc[row_index,'Loại cách điện']
-    st.write(f"Loại cách điện: {loai_cach_dien}")
-    loai_cap_quang=df.loc[row_index,'Loại cáp quang']
-    st.write(f"Loại cáp quang: {loai_cap_quang}")
-    hanh_lang=df.loc[row_index,'Hành lang']
-    st.write(f"Hành lang: {hanh_lang}")
+    get_col=df.query("`Vị trí` in @result")[['Vị trí', 'Công dụng cột','Thứ tự pha','Loại cột','Chiều cao cột','Loại dây dẫn','Loại cáp quang','Loại tiếp địa','Loại cách điện','Hành lang']]
+    st.write(get_col.T)
+ 
+
+def process(subs, df):
+    col_name=gf.ass_col_name(subs)
+    st.header(f"📋{subs}")
+    st.markdown("---")
+    dis87_2 = st.number_input(f"🔢 Nhập khoảng cách sự cố F87/{subs}:", min_value=0)
+    dis21_2 = st.number_input(f"🔢 Nhập khoảng cách sự cố F21/{subs}:", min_value=0)
+    result_87 = findx(dis87_2, df, "F87", col_name)
+    if result_87:
+        info(df, result_87, "F87")
+    result_21 = findx(dis21_2, df, "F21", col_name)
+    if result_21:
+        info(df, result_21, "F21")
