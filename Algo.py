@@ -78,7 +78,7 @@ def process(subs, df, subs_no):
 def directions (df, result):
     if result:
         lat=df.query("`Vị trí` in @result")['Latitude']
-        lon=df.query("`Vị trí` in @result")['Longtitude']
+        lon=df.query("`Vị trí` in @result")['Longitude']
         maps_url_0 = f"https://www.google.com/maps?q={lat.iloc[0]},{lon.iloc[0]}"
         st.markdown(f"[🗺️ Xem trên bản đồ: VT {result[0]}]({maps_url_0})", unsafe_allow_html=True)
         maps_url_1 = f"https://www.google.com/maps?q={lat.iloc[1]},{lon.iloc[1]}"
@@ -193,4 +193,5 @@ def directions (df, result):
 #     else:
 #         st.subheader(f"📋 Thông tin chi tiết các cột theo {role_name}:")
 #         st.table(selected_rows)
+
 
