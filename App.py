@@ -1,69 +1,73 @@
 import streamlit as st
 import pandas as pd
 import openpyxl as op
-import Gfile as gf
-import Algo as al
-
-# Cài đặt định dạng trang web
-st.set_page_config(page_title="Tra cứu sự cố",layout="wide",initial_sidebar_state="expanded")
-
-# Cài đặt tittle và chế độ chia cột
-colm1, colm2=st.columns([5,1],vertical_alignment="bottom")
-colm1.title("📊 TRA CỨU SỰ CỐ" )
-view_mode=colm2.toggle("🔄 Chế độ chia cột")
-
-# Lựa chọn tình trạng đóng lặp lại
-F79=al.initial_info()
-
-#Cấu hình đường dây, tba
-select_dz=gf.select_name_dz()
-subs=gf.select_tba_1(select_dz)
-df = gf.accum(select_dz)
-
-#Chạy chương trình
-colm6, colm7=st.columns(2)
-if view_mode:
-    with colm6:  #TẠI TBA 1 #cột 1
-            al.process(subs[0],df,"subs_0")
-    with colm7:#TẠI TBA 2 #cột 2
-            al.process(subs[1],df,"subs_1")
-else:   
-    with st.expander(f"{subs[0]}"): #TẠI TBA 1 #cột 1
-        al.process(subs[0], df,"subs_0")
-    with st.expander(f"{subs[1]}"): #TẠI TBA 2 #cột 2
-        al.process(subs[1], df,"subs_1")
-# Xem tổng kê
-# st.markdown("---")
-# xem_tongke=st.checkbox("Xem tổng kê đường dây")
-# if xem_tongke: df
-
-# lat=12.47484
-# lon=109.28699
-
-# maps_url = f"https://www.google.com/maps?q={lat},{lon}"
-# # Nút mở Google Maps
-# if st.button("🔍 Loc trên Google Maps"):
-#     st.markdown(f"[🗺️ Xem trên bản đồ]({maps_url})", unsafe_allow_html=True)
-
-
-    
 
 
 
+g_map=pd.read_excel("data/mapping.xlsx")                                                    #doc file mapping
+tendz_map = pd.Series(g_map['TEN FILE'].values, index=g_map['TEN DZ']).to_dict()            #Anh xa ten duong day -> ten file
+tba_map = pd.Series(zip(g_map['TBA1'], g_map['TBA2']), index=g_map['TEN DZ']).to_dict()     #Anh xa ten duong day -> ten TBA 1, TBA2
+
+def select_name_dz():
+    select_dz = st.selectbox("📂 Hãy chọn đường dây", list(tendz_map.keys()),index=None,placeholder="Chọn 01 đường dây trong danh sách") or st.stop()
+    return select_dz
+
+def select_tba_1(select_dz):
+    select_tba = tba_map.get(select_dz,[])
+    return select_tba
+
+def accum(select_dz):
+    excel_name= tendz_map.get(select_dz,None)
+    if not excel_name:
+        st.error("❌ Không tìm thấy ánh xạ đúng cho đường dây đã chọn.")
+        return None
+    path_excel = f"data/{excel_name}"
+    try:
+        df = pd.read_excel(path_excel)
+    except Exception as e:
+        st.error(f"❌ Lỗi khi đọc file: {e}")
+        return pd.DataFrame()
+    return df
+
+
+# mapping=pd.read_excel("data/mapping.xlsx") #doc file mapping
+# tendz_map = pd.Series(mapping['TEN FILE'].values, index=mapping['TEN DZ']).to_dict()            #Anh xa ten duong day -> ten file
+# tba_map = pd.Series(zip(mapping['TBA1'], mapping['TBA2']), index=mapping['TEN DZ']).to_dict()   #Anh xa ten duong day -> ten TBA 1, TBA2
+
+# def select_name_dz():
+#     select_dz = st.selectbox("📂 Hãy chọn đường dây", list(tendz_map.keys()))
+#     return select_dz
+
+# def select_tba_1(select_dz):
+#     select_tba = tba_map.get(select_dz,[])
+#     return select_tba
 
 
 
+# def accum(select_dz):
+#     excel_name= tendz_map.get(select_dz,None)
+#     if not excel_name:
+#         st.erro("❌ Không tìm thấy ánh xạ đúng cho đường dây đã chọn.")
+#         return None
+#     path_excel = f"data/{excel_name}"
+#     try:
+#         df = pd.read_excel(path_excel)
+#     except Exception as e:
+#         st.error(f"❌ Lỗi khi đọc file: {e}")
+#         return pd.DataFrame()
+#     return df
 
 
 
-    # col_name=gf.ass_col_name(tba_1)
-    # st.header(f"📋{tba_1}")
-    # st.markdown("---")
-    # dis87_2 = st.number_input(f"🔢 Nhập khoảng cách sự cố F87/2:", min_value=0)
-    # dis21_2 = st.number_input(f"🔢 Nhập khoảng cách sự cố F21/2:", min_value=0)
-    # result_87 = al.findx(dis87_2, df, "F87", col_name)
-    # if result_87:
-    #     al.info(df, result_87, "F87")
-    # result_21 = al.findx(dis21_2, df, "F21", col_name)
-    # if result_21:
-    #     al.info(df, result_21, "F21")
+# Ánh xạ đường dây → file Excel
+# tendz_map = {
+#     "Đường dây 273 KrongBuk - 271 Nha Trang": "krb-nt.xlsx",
+#     "Đường dây 274 Cam Ranh - 274 Nha Trang": "274CR-274NT.xlsx"
+#     }
+
+
+# Ánh xạ đường dây → danh sách các TBA tương ứng
+# tba_map = {
+#     "Đường dây 273 KrongBuk - 271 Nha Trang": ["Trạm biến áp 220kV KrongBuk","Trạm biến áp 220kV Nha Trang"],
+#     "Đường dây 274 Cam Ranh - 274 Nha Trang": ["Trạm biến áp 220kV Cam Ranh","Trạm biến áp 220kV Nha Trang"]
+# }
